@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: main
+  namespace: kubeless
+  labels:
+    app: main
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      containers:
+      - name: main
+        image: idobry/main:1.0.4
+        ports:
+        - containerPort: 5000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: main-svc
+  namespace: kubeless
+spec:
+  selector:
+    app: main
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+    
+
